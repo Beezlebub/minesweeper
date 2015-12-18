@@ -8,24 +8,31 @@ function menuLoad()
 	
 	btnEasy = {}
 	btnEasy.x =	100
-	btnEasy.y = lg.getHeight()/2 - 50
+	btnEasy.y = lg.getHeight()/2 - 65
 	btnEasy.w = 200
 	btnEasy.h = 50
 	btnEasy.hover = false
 
 	btnMed = {}
 	btnMed.x = 100
-	btnMed.y = lg.getHeight()/2 + 25
+	btnMed.y = lg.getHeight()/2 - 10
 	btnMed.w = 200
 	btnMed.h = 50
 	btnMed.hover = false
 
 	btnHard = {}
 	btnHard.x = 100
-	btnHard.y = lg.getHeight()/2 + 100
+	btnHard.y = lg.getHeight()/2 + 45
 	btnHard.w = 200
 	btnHard.h = 50
 	btnHard.hover = false
+
+	btnExtreme = {}
+	btnExtreme.x = 100
+	btnExtreme.y = lg.getHeight()/2 + 100
+	btnExtreme.w = 200
+	btnExtreme.h = 50
+	btnExtreme.hover = false
 
 	gTimer = {}
 	gTimer.x = lg.getWidth()-60
@@ -48,6 +55,7 @@ function menuUpdate(dt)
 	btnEasy.hover = false
 	btnMed.hover = false
 	btnHard.hover = false
+	btnExtreme.hover = false
 
 	if mx < btnEasy.x + btnEasy.w and btnEasy.x < mx and my < btnEasy.y + btnEasy.h and btnEasy.y < my then
 		btnEasy.hover = true
@@ -55,6 +63,8 @@ function menuUpdate(dt)
 		btnMed.hover = true
 	elseif mx < btnHard.x + btnHard.w and btnHard.x < mx and my < btnHard.y + btnHard.h and btnHard.y < my then
 		btnHard.hover = true
+	elseif mx < btnExtreme.x + btnExtreme.w and btnExtreme.x < mx and my < btnExtreme.y + btnExtreme.h and btnExtreme.y < my then
+		btnExtreme.hover = true
   	end
 
 end
@@ -64,25 +74,33 @@ function menuDraw()
 	lg.rectangle("fill", btnEasy.x, btnEasy.y, btnEasy.w, btnEasy.h)
 	lg.rectangle("fill", btnMed.x, btnMed.y, btnMed.w, btnMed.h)
 	lg.rectangle("fill", btnHard.x, btnHard.y, btnHard.w, btnHard.h)
+	lg.rectangle("fill", btnExtreme.x, btnExtreme.y, btnExtreme.w, btnExtreme.h)
 
-	lg.setColor(50, 255, 50, 180)
+	
 	if btnEasy.hover then
+		lg.setColor(100, 255, 100)
 		lg.rectangle("fill", btnEasy.x, btnEasy.y, btnEasy.w, btnEasy.h)
 	elseif btnMed.hover then
+		lg.setColor(255, 255, 100)
 		lg.rectangle("fill", btnMed.x, btnMed.y, btnMed.w, btnMed.h)
 	elseif btnHard.hover then
+		lg.setColor(255, 180, 100)
 		lg.rectangle("fill", btnHard.x, btnHard.y, btnHard.w, btnHard.h)
+	elseif btnExtreme.hover then
+		lg.setColor(255, 80, 80)
+		lg.rectangle("fill", btnExtreme.x, btnExtreme.y, btnExtreme.w, btnExtreme.h)
 	end
 
 	lg.setFont(font36)
 	lg.setColor(255, 255, 255)
-	lg.printf("MINESWEEPER", 0, 75, lg.getWidth(), "center")
+	lg.printf("MINESWEEPER", 0, 50, lg.getWidth(), "center")
 
 	lg.setFont(font20)
 	lg.setColor(0, 0, 0)
 	lg.printf("EASY", btnEasy.x, btnEasy.y+15, btnEasy.w, "center")
 	lg.printf("MEDIUM", btnMed.x, btnMed.y+15, btnMed.w, "center")
 	lg.printf("HARD", btnHard.x, btnHard.y+15, btnHard.w, "center")
+	lg.printf("EXTREME", btnExtreme.x, btnExtreme.y+15, btnExtreme.w, "center")
 end
 
 function menuClick(mx, my, btn)
@@ -92,6 +110,8 @@ function menuClick(mx, my, btn)
 		gameStart("med")
 	elseif mx < btnHard.x + btnHard.w and btnHard.x < mx and my < btnHard.y + btnHard.h and btnHard.y < my then
 		gameStart("hard")
+	elseif mx < btnExtreme.x + btnExtreme.w and btnExtreme.x < mx and my < btnExtreme.y + btnExtreme.h and btnExtreme.y < my then
+		gameStart("extreme")
   	end
 end
 
@@ -113,12 +133,18 @@ function gameStart(mode)
 		numBombs = 25
 
 	elseif state == "hard" then
-		numRows = 20
-		numColumns = 30
+		numRows = 25
+		numColumns = 25
 		numBombs = 99
+
+	elseif state == "extreme" then
+		numRows = 45
+		numColumns = 25
+		numBombs = 200
+
 	end
 
-	lw.setMode(numColumns*30 + 5, numRows*30 + 50, {resizable=false, centered=true})
+	lw.setMode(numRows*30 + 5, numColumns*30 + 50, {resizable=false, centered=true})
 	gTimer.x = lg.getWidth()-60
 	gTimer.y = lg.getHeight()-40
 	gBomb.x = 10
