@@ -24,7 +24,7 @@ function gameUpdate(dt)
 			state = "win"
 		end
 		
-		if state == "easy" or state == "med" or state == "hard" then
+		if state == "easy" or state == "med" or state == "hard" or state == "extreme" then
 			gTimer.val = gTimer.val + 1*dt
   			gBomb.val = numBombs - markedBombs
 		end
